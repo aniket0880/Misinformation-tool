@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Misinformation Analyzer</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h2>Misinformation Detection Tool</h2>
+
+    <form id="analyzeForm">
+        <label>Enter URL or Text:</label><br>
+        <textarea name="content" rows="5" cols="50"></textarea><br><br>
+
+        <label>Select Type:</label>
+        <select name="type">
+            <option value="url">URL</option>
+            <option value="text">Text</option>
+        </select><br><br>
+
+        <button type="submit">Analyze</button>
+    </form>
+
+    <h3>Results:</h3>
+    <div id="results"></div>
+
+    <script>
+        $("#analyzeForm").submit(function(event) {
+            event.preventDefault();
+
+            $.post("/analyze", $(this).serialize(), function(data) {
+                if (data.error) {
+                    $("#results").html("<p style='color:red;'>" + data.error + "</p>");
+                } else {
+                    let output = "";
+                    data.results.forEach(function(res, i) {
+                        output += "<h4>Chunk " + (i+1) + "</h4><p>" + res + "</p>";
+                    });
+                    $("#results").html(output);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
