@@ -4,11 +4,14 @@ import textwrap
 import requests
 from fastapi import FastAPI, Query
 from pydantic import BaseModel
+from dotenv import load_dotenv
 from typing import List
 
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_community.document_loaders import WebBaseLoader
 from langchain_community.tools.tavily_search import TavilySearchResults
+
+load_dotenv()
 
 # ----------------- Config -----------------
 GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY")
