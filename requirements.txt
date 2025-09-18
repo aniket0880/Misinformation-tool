@@ -7,4 +7,3 @@ langchain-community
 google-generativeai
 tavily-python
 pydantic
-fastapi.middleware.cors
