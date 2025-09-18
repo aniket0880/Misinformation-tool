@@ -4,11 +4,18 @@ import textwrap
 import requests
 from fastapi import FastAPI, Query
 from pydantic import BaseModel
+from dotenv import load_dotenv
 from typing import List
 
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_community.document_loaders import WebBaseLoader
 from langchain_community.tools.tavily_search import TavilySearchResults
+
+from fastapi.middleware.cors import CORSMiddleware
+
+
+
+load_dotenv()
 
 # ----------------- Config -----------------
 GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY")
@@ -20,6 +27,15 @@ if not TAVILY_API_KEY:
     raise ValueError("Missing TAVILY_API_KEY environment variable.")
 
 app = FastAPI(title="Misinformation Checker API", version="1.0")
+
+# allow CORS (dev)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],   # for dev; lock down in prod to your extension domain or dashboard
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # ----------------- Helpers -----------------
 def build_llm():

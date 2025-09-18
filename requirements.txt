@@ -1,6 +1,10 @@
-streamlit
-langchain_core
-langchain_community
-langchain_ollama
-selenium
-unstructured
+fastapi
+uvicorn
+requests
+python-dotenv
+langchain-google-genai
+langchain-community
+google-generativeai
+tavily-python
+pydantic
+fastapi.middleware.cors
